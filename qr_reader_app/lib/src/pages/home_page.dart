@@ -79,13 +79,14 @@ class _HomePageState extends State<HomePage> {
 
   // Method that opens the qr scanner.
   _scanQR() async {
-    String futureString = '';
+    //String futureString = '';
+    String futureString = 'https://magocode.com';
 
-    try {
+    /* TODO try {
       futureString = await BarcodeScanner.scan();
     } catch(e) {
       futureString = e.toString();
-    }
+    }*/
 
     print(futureString);
   }
