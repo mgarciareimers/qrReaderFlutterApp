@@ -4,7 +4,7 @@ class AddressesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-       child: Text('Addresses Page'),
+      child: Text('Addresses Page'),
     );
   }
 }

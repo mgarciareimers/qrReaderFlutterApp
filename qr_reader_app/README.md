@@ -1,6 +1,6 @@
 # qr_reader_app
 
-App that reads QR code and executes actions
+QR Reader App
 
 ## Getting Started
 
