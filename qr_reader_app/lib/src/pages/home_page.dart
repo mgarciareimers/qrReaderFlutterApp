@@ -1,9 +1,13 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:qr_reader_app/src/bloc/scans_bloc.dart';
+import 'package:qr_reader_app/src/commons/utils.dart';
 
 import 'package:qr_reader_app/src/pages/maps_page.dart';
 import 'package:qr_reader_app/src/pages/addresses_page.dart';
+import 'package:qr_reader_app/src/models/scan_model.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,6 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final scansBloc = new ScansBloc();
   int _currentIndex = 0;
 
   @override
@@ -32,7 +37,7 @@ class _HomePageState extends State<HomePage> {
         IconButton(
           icon: Icon(Icons.delete_forever),
           onPressed: () {
-
+            this.scansBloc.deleteAll();
           },
         ),
       ],
@@ -79,15 +84,25 @@ class _HomePageState extends State<HomePage> {
 
   // Method that opens the qr scanner.
   _scanQR() async {
-    //String futureString = '';
-    String futureString = 'https://magocode.com';
+    String futureString = '';
 
-    /* TODO try {
+    try {
       futureString = await BarcodeScanner.scan();
     } catch(e) {
       futureString = e.toString();
-    }*/
+    }
 
-    print(futureString);
+    if (futureString != null) {
+      final scan = ScanModel(value: futureString);
+      this.scansBloc.insertScan(scan);
+
+      if (Platform.isIOS) {
+        Future.delayed(Duration(milliseconds: 750), () {
+          Utils.loadScanValue(context, scan);
+        });
+      } else {
+        Utils.loadScanValue(context, scan);
+      }
+    }
   }
 }
